@@ -1,0 +1,5 @@
+{
+  "directory": "app/bower_components",
+  "proxy": "http://collinsg:Sandyford23@dnb-pxy01-dub-new.ie.dnb.com:3128",
+  "https-proxy":"http://collinsg:Sandyford23@dnb-pxy01-dub-new.ie.dnb.com:3128"
+}
