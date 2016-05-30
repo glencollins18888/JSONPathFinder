@@ -21,12 +21,20 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
   //Submit the Request to get the paths for the node text.
   $scope.results = [];
   $scope.paths = [];
-
+  $scope.validJSON = true;
+  
   $scope.submit = function() {
 
     $scope.paths = [];
     var enteredNode = $scope.nodeText;
-    var json = angular.fromJson($scope.enteredJson);
+    var json;
+    try {
+      json = angular.fromJson($scope.enteredJson);
+      $scope.validJSON = true;
+    } catch(err) {
+      console.log("Invalid JSON");
+      $scope.validJSON = false;
+    }
 
     addJsonPaths(json, "");
     console.log($scope.paths);

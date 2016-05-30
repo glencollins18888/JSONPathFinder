@@ -34,6 +34,7 @@
                 <div>
                     <label for="jsonTextArea">Please enter a valid JSON document you would like to search on:</label>
                     <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder="e.g.  {Person : {FirstName: 'John'}}" ng-model="enteredJson"></textarea>
+                    <label for="invalidJSON" ng-hide="validJSON">Invalid JSON entered, please check syntax</label>
                 </div>
                 <br>
                 <div>
