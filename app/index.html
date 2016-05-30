@@ -1,8 +1,6 @@
+<!--
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<html lang="en" ng-app="clientApp">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,9 +14,9 @@
 </head>
 <body>
 
-  <div ng-view>
+  <div>
 
-      <div>
+      <div ng-controller="formCtrl">
           <label for="jsonTextArea">Please enter your JSON document you would like to search on:</label>
           <textarea name=jsonTextArea" style="margin: 0px; width: 676px; height: 362px;"
                   ng-model="string"
@@ -46,20 +44,49 @@
                           [ng-change="string"]
                           [ng-trim="boolean"]>
     </div>
+      <h1>You submitted {{nodeText}}</h1>
 
       <div>
           <input type="button" value="Submit" style="width: 100px;">
       </div>
   </div>
 
-<!--  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>-->
+&lt;!&ndash;  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>&ndash;&gt;
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+</body>
+</html>
+-->
+
+
+<!DOCTYPE html>
+<html ng-app="clientApp">
+<head>
+    <title>AnuglarJS JSON path finder</title>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+</head>
+
+    <div ng-controller="PathFinderController">
+        <div>
+            <label for="jsonTextArea">Please enter your JSON document you would like to search on:</label>
+            <textarea name=jsonTextArea" style="margin: 0px; width: 676px; height: 362px;" ng-model="enteredJson"></textarea>
+        </div>
+        <div>
+            <label for="nodeInput">Enter the Node you would like to get the Full Path to:</label>
+            <input name="nodeInput" type="text" ng-model="nodeText">
+        </div>
+        <h1>You submitted {{nodeText}}</h1>
+        <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();">Submit</button>
+
+        <div id="output" ng-model="pathResults">
+
+        </div>
+    </div>
+
+<script src="app.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+/*angular.module('myApp', [
   'ngRoute',
   'myApp.view1',
   'myApp.view2',
@@ -11,4 +11,42 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   $locationProvider.hashPrefix('!');
 
   $routeProvider.otherwise({redirectTo: '/view1'});
+}]);*/
+
+var clientApp = angular.module('clientApp', []);
+
+
+clientApp.controller('PathFinderController', ['$scope', function($scope) {
+
+  //Submit the Request to get the paths for the node text.
+  $scope.results = [];
+  $scope.paths = [];
+
+  $scope.submit = function() {
+    var enteredNode = $scope.nodeText;
+    var json = angular.fromJson($scope.enteredJson);
+
+    iterate(json, "");
+    console.log($scope.paths);
+    $scope.pathResults = $scope.paths;
+  };
+
+  function iterate(theObject, path) {
+    var paths = [];
+    for (var property in theObject) {
+      if (theObject.hasOwnProperty(property)) {
+        if (theObject[property] instanceof Object) {
+          iterate(theObject[property], path + '/' + property);
+        } else {
+          var finalPath = path + '/' + property;
+          if(finalPath.indexOf($scope.nodeText) > -1) {
+            var nodeIndex = finalPath.indexOf($scope.nodeText);
+            $scope.paths.push(finalPath.substring(0, nodeIndex + $scope.nodeText.length));
+          }
+        }
+      }
+    }
+  }
+
 }]);
+
