@@ -6,7 +6,10 @@
   "description": "A free tool to use to discover full paths to nodes within a JSON document",
   "author": "Glen Collins",
 
-  "icons": { "16": "img/logo_16x16.png"},
+   "icons": { "16": "img/logo_16x16.png",
+             "48": "img/logo_16x16.png",
+             "128": "img/logo_16x16.png"
+  },
 
   "background": {
     "scripts": ["extension/background.js"]
