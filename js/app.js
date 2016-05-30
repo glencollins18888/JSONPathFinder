@@ -54,3 +54,11 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
 
 }]);
 
+clientApp.controller('PathResultsController', ['$scope', function($scope) {
+
+  $scope.copyPath = function() {
+    //TODO
+  };
+
+}]);
+
