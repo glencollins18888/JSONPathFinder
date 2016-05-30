@@ -40,9 +40,12 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
           addJsonPaths(theObject[property], path + '/' + property);
         } else {
           var finalPath = path + '/' + property;
-          if(finalPath.indexOf($scope.nodeText) > -1) {
+          if(finalPath.indexOf("/" + $scope.nodeText) > -1) {
             var nodeIndex = finalPath.indexOf($scope.nodeText);
-            $scope.paths.push(finalPath.substring(0, nodeIndex + $scope.nodeText.length));
+              finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length);
+              if($scope.paths.indexOf(finalPath) == -1) {
+                  $scope.paths.push(finalPath);
+              }
           }
         }
       }
