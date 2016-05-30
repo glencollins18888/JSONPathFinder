@@ -23,6 +23,8 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
   $scope.paths = [];
 
   $scope.submit = function() {
+
+    $scope.paths = [];
     var enteredNode = $scope.nodeText;
     var json = angular.fromJson($scope.enteredJson);
 
