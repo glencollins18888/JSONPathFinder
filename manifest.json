@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+  "name": "JSON Path Finder",
+  "version": "1.0.0",
+
+  "description": "A free tool to use to discover full paths to nodes within a JSON document",
+  "author": "Glen Collins",
+
+  "icons": { "16": "img/logo_16x16.png"}
+
+}
