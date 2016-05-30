@@ -26,17 +26,16 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
     var enteredNode = $scope.nodeText;
     var json = angular.fromJson($scope.enteredJson);
 
-    iterate(json, "");
+    addJsonPaths(json, "");
     console.log($scope.paths);
-    $scope.pathResults = $scope.paths;
   };
 
-  function iterate(theObject, path) {
+  function addJsonPaths(theObject, path) {
     var paths = [];
     for (var property in theObject) {
       if (theObject.hasOwnProperty(property)) {
         if (theObject[property] instanceof Object) {
-          iterate(theObject[property], path + '/' + property);
+          addJsonPaths(theObject[property], path + '/' + property);
         } else {
           var finalPath = path + '/' + property;
           if(finalPath.indexOf($scope.nodeText) > -1) {
