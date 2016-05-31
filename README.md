@@ -1,2 +1,2 @@
-# JSONPathFinder
-Simple tool that navigates a JSON document to discover the full path to a node specified
+# JSONPath Finder
+Chrome Extension that finds all JSONPaths for a specified node.
