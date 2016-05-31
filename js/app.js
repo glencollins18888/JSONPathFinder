@@ -22,7 +22,6 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
   $scope.results = [];
   $scope.paths = [];
   $scope.validJSON = true;
-
   $scope.submit = function() {
 
     $scope.paths = [];
@@ -37,7 +36,7 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
     }
 
     addJsonPaths(json, "");
-    console.log($scope.paths);
+    $scope.submitted = true;
   };
 
   function addJsonPaths(theObject, path) {
