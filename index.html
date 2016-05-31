@@ -14,20 +14,23 @@
             <h2>JSON Path Finder {?}</h2>
             <p>Simple tool that allows you to get full paths to any node in a JSON document, formatted as <b>GrandParentNode/ParentNode/SearchNode</b></p>
             <div class="starter-template" style="margin-top: 40px;">
-                <div ng-controller="PathFinderController">
-                    <div>
-                        <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder=' Please enter a valid JSON document e.g.  {"Person" : {"FirstName": "John"}}' ng-model="enteredJson"></textarea>
 
-                        <div class="alert alert-danger" ng-hide="validJSON">
-                            Invalid JSON Syntax. You can validate your JSON <a href="http://jsonlint.com/" target="_blank">here</a>
+                <div ng-controller="PathFinderController">
+                    <form>
+                        <div>
+                            <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder=' Please enter a valid JSON document e.g.  {"Person" : {"FirstName": "John"}}' ng-model="enteredJson"></textarea>
+
+                            <div class="alert alert-danger" ng-hide="validJSON">
+                                Invalid JSON Syntax. You can validate your JSON <a href="http://jsonlint.com/" target="_blank">here</a>
+                            </div>
                         </div>
-                    </div>
-                    <br>
-                    <div>
-                        <label for="nodeInput">Search Node :</label>
-                        <input name="nodeInput" type="text" ng-model="nodeText" placeholder="e.g FirstName" style="width: 250px;">
-                        <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="!enteredJson || !nodeText">Submit</button>
-                    </div>
+                        <br>
+                        <div>
+                            <label for="nodeInput">Search Node :</label>
+                            <input name="nodeInput" type="text" ng-model="nodeText" placeholder="e.g FirstName" style="width: 250px;">
+                            <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="!enteredJson || !nodeText">Submit</button>
+                        </div>
+                    </form>
 
                     <section id="results" class="panel panel-primary" style="margin-top: 20px" ng-show="submitted">
                         <div class="panel-heading">
