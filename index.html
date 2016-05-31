@@ -5,66 +5,68 @@
     <meta charset="utf-8">
     <title>JSON Path Finder</title>
     <link href="app/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+<body>
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">JSON Path Finder</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <section class="container" style="margin-top: 100px;">
-
-        <div class="starter-template">
-            <div ng-controller="PathFinderController">
-                <div>
-                    <label for="jsonTextArea">Please enter a valid JSON document you would like to search on:</label>
-                    <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder='e.g.  {"Person" : {"FirstName": "John"}}' ng-model="enteredJson"></textarea>
-                    <label for="invalidJSON" ng-hide="validJSON">Invalid JSON entered, please check syntax. You can validate your JSON <a href="http://jsonlint.com/" target="_blank">here</a></label>
-                </div>
-                <br>
-                <div>
-                    <label for="nodeInput">Search Node :</label>
-                    <input name="nodeInput" type="text" ng-model="nodeText" placeholder="e.g FirstName">
-                    <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="!enteredJson || !nodeText">Submit</button>
-                </div>
-
-                <section id="results" class="panel panel-primary" style="margin-top: 20px">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">JSON Paths for : {{nodeText}}</h2>
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">JSON Path Finder</a>
                     </div>
-                    <div class="panel-body" ng-controller="PathResultsController">
-                        <span>Total paths found: {{paths.length}}</span>
-                        <ul style="margin-top: 10px;width: 90%;">
-                            <li ng-repeat="path in paths">
-                                <span style="word-break: break-all;">{{path}} <button type="button" class="btn btn-primary btn-xs glyphicon glyphicon-copy" ng-click="copyPath(path);" title="Copy Path"></button></span>
-                            </li>
+                    <div id="navbar" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#contact">Contact</a></li>
                         </ul>
                     </div>
-                </section>
+                </div>
+            </nav>
 
-            </div>
+            <section class="container" style="margin-top: 100px;">
+
+                <div class="starter-template">
+                    <div ng-controller="PathFinderController">
+                        <div>
+                            <label for="jsonTextArea">Please enter a valid JSON document you would like to search on:</label>
+                            <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder='e.g.  {"Person" : {"FirstName": "John"}}' ng-model="enteredJson"></textarea>
+                            <label for="invalidJSON" ng-hide="validJSON" class="text-warning">Invalid JSON entered, please check syntax. You can validate your JSON <a href="http://jsonlint.com/" target="_blank">here</a></label>
+                        </div>
+                        <br>
+                        <div>
+                            <label for="nodeInput">Search Node :</label>
+                            <input name="nodeInput" type="text" ng-model="nodeText" placeholder="e.g FirstName">
+                            <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="!enteredJson || !nodeText">Submit</button>
+                        </div>
+
+                        <section id="results" class="panel panel-primary" style="margin-top: 20px">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">JSON Paths for : {{nodeText}}</h2>
+                            </div>
+                            <div class="panel-body" ng-controller="PathResultsController">
+                                <span>Total paths found: {{paths.length}}</span>
+                                <ul style="margin-top: 10px;width: 90%;">
+                                    <li ng-repeat="path in paths">
+                                        <span style="word-break: break-all;">{{path}} <button type="button" class="btn btn-primary btn-xs glyphicon glyphicon-copy" ng-click="copyPath(path);" title="Copy Path"></button></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </section>
+
+            <footer class="bs-docs-footer" role="contentinfo"> <div class="container"> Glen Collins 2016</div></footer>
         </div>
-    </section>
+        <script src="app/bower_components/angular/angular.min.js"></script>
+        <script src="js/app.js"></script>
 
-    </div><!-- /.container -->
-
-<script src="app/bower_components/angular/angular.min.js"></script>
-<script src="js/app.js"></script>
-
-</body>
+    </body>
 </html>
