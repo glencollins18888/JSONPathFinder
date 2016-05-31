@@ -14,8 +14,7 @@
             <div class="starter-template" style="margin-top: 40px;">
                 <div ng-controller="PathFinderController">
                     <div>
-                        <label for="jsonTextArea">Please enter a valid JSON document you would like to search on:</label>
-                        <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder='e.g.  {"Person" : {"FirstName": "John"}}' ng-model="enteredJson"></textarea>
+                        <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder='Please enter a valid JSON document e.g.  {"Person" : {"FirstName": "John"}}' ng-model="enteredJson"></textarea>
                         <label for="invalidJSON" ng-hide="validJSON" class="text-warning">Invalid JSON entered, please check syntax. You can validate your JSON <a href="http://jsonlint.com/" target="_blank">here</a></label>
                     </div>
                     <br>
