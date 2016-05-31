@@ -52,7 +52,7 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
         } else {
           var finalPath = path + '/' + property;
           if(finalPath.indexOf("/" + $scope.nodeText) > -1) {
-            var nodeIndex = finalPath.indexOf($scope.nodeText);
+            var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
               finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length);
               if($scope.paths.indexOf(finalPath) == -1) {
                   $scope.paths.push(finalPath);
