@@ -33,8 +33,8 @@
             <div ng-controller="PathFinderController">
                 <div>
                     <label for="jsonTextArea">Please enter a valid JSON document you would like to search on:</label>
-                    <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder="e.g.  {Person : {FirstName: 'John'}}" ng-model="enteredJson"></textarea>
-                    <label for="invalidJSON" ng-hide="validJSON">Invalid JSON entered, please check syntax</label>
+                    <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder='e.g.  {"Person" : {"FirstName": "John"}}' ng-model="enteredJson"></textarea>
+                    <label for="invalidJSON" ng-hide="validJSON">Invalid JSON entered, please check syntax. You can validate your JSON <a href="http://jsonlint.com/" target="_blank">here</a></label>
                 </div>
                 <br>
                 <div>
@@ -48,10 +48,10 @@
                         <h2 class="panel-title">JSON Paths for : {{nodeText}}</h2>
                     </div>
                     <div class="panel-body" ng-controller="PathResultsController">
-                        <span>Total paths for node: {{paths.length}}</span>
-                        <ul style="margin-top: 10px;">
+                        <span>Total paths found: {{paths.length}}</span>
+                        <ul style="margin-top: 10px;width: 90%;">
                             <li ng-repeat="path in paths">
-                                <span>{{path}} <button type="button" class="btn btn-primary btn-xs" ng-click="copyPath(path);" title="Copy Path">Copy Path</button></span>
+                                <span style="word-break: break-all;">{{path}} <button type="button" class="btn btn-primary btn-xs glyphicon glyphicon-copy" ng-click="copyPath(path);" title="Copy Path"></button></span>
                             </li>
                         </ul>
                     </div>
