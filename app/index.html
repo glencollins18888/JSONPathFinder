@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html ng-app="clientApp">
+<head>
+    <title>AnuglarJS JSON path finder</title>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+</head>
+
+    <div ng-controller="PathFinderController">
+        <div>
+            <label for="jsonTextArea">Please enter your JSON document you would like to search on:</label>
+            <textarea name=jsonTextArea" style="margin: 0px; width: 676px; height: 362px;" ng-model="enteredJson"></textarea>
+        </div>
+        <br>
+        <div>
+            <label for="nodeInput">Enter the Node you would like to get the Full Path to:</label>
+            <input name="nodeInput" type="text" ng-model="nodeText">
+            <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();">Submit</button>
+        </div>
+
+        <h2>JSON Paths for : {{nodeText}}</h2>
+        <ul>
+            <li ng-repeat="path in paths">
+                <span>{{path}}</span>
+            </li>
+        </ul>
+
+        </div>
+    </div>
+
+<script src="app.js"></script>
+</body>
+</html>
