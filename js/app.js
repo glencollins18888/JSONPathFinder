@@ -21,15 +21,22 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
   //Submit the Request to get the paths for the node text.
   $scope.results = [];
   $scope.paths = [];
-
+  $scope.validJSON = true;
   $scope.submit = function() {
 
     $scope.paths = [];
     var enteredNode = $scope.nodeText;
-    var json = angular.fromJson($scope.enteredJson);
+    var json;
+    try {
+      json = angular.fromJson($scope.enteredJson);
+      $scope.validJSON = true;
+    } catch(err) {
+      console.log("Invalid JSON");
+      $scope.validJSON = false;
+    }
 
     addJsonPaths(json, "");
-    console.log($scope.paths);
+    $scope.submitted = true;
   };
 
   function addJsonPaths(theObject, path) {
@@ -37,11 +44,15 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
     for (var property in theObject) {
       if (theObject.hasOwnProperty(property)) {
         if (theObject[property] instanceof Object) {
-          addJsonPaths(theObject[property], path + '/' + property);
+          if(isInt(property)) {
+            addJsonPaths(theObject[property], path + '[' + property + ']');
+          } else {
+            addJsonPaths(theObject[property], path + '/' + property);
+          }
         } else {
           var finalPath = path + '/' + property;
           if(finalPath.indexOf("/" + $scope.nodeText) > -1) {
-            var nodeIndex = finalPath.indexOf($scope.nodeText);
+            var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
               finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length);
               if($scope.paths.indexOf(finalPath) == -1) {
                   $scope.paths.push(finalPath);
@@ -51,6 +62,19 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
       }
     }
   }
+
+  function isInt(value) {
+    var x = parseFloat(value);
+    return !isNaN(value) && (x | 0) === x;
+  }
+
+}]);
+
+clientApp.controller('PathResultsController', ['$scope', function($scope) {
+
+  $scope.copyPath = function() {
+    //TODO
+  };
 
 }]);
 

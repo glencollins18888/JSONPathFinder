@@ -1,0 +1,36 @@
+/*
+ * Sticky footer styles
+ */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 30px;
+}
+footer.navbar-default {
+  position: absolute;
+  bottom: 0;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-width: 1px;
+  border-style: solid;
+  border-bottom-width: 0;
+}
+footer p {
+  font-size: smaller;
+  margin: 2px;
+}
+
+footer a, footer a:hover, footer a:focus {
+  color: #555;
+}
+
+
+/* Media Queries*/
+@media (max-width: 767px) {
+  footer.container {
+    width: 100%;
+  }
+}
+
