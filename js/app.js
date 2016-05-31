@@ -22,7 +22,7 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
   $scope.results = [];
   $scope.paths = [];
   $scope.validJSON = true;
-  
+
   $scope.submit = function() {
 
     $scope.paths = [];
@@ -45,7 +45,11 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
     for (var property in theObject) {
       if (theObject.hasOwnProperty(property)) {
         if (theObject[property] instanceof Object) {
-          addJsonPaths(theObject[property], path + '/' + property);
+          if(isInt(property)) {
+            addJsonPaths(theObject[property], path + '[' + property + ']');
+          } else {
+            addJsonPaths(theObject[property], path + '/' + property);
+          }
         } else {
           var finalPath = path + '/' + property;
           if(finalPath.indexOf("/" + $scope.nodeText) > -1) {
@@ -58,6 +62,11 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
         }
       }
     }
+  }
+
+  function isInt(value) {
+    var x = parseFloat(value);
+    return !isNaN(value) && (x | 0) === x;
   }
 
 }]);

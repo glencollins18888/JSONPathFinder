@@ -20,12 +20,6 @@
                         </button>
                         <a class="navbar-brand" href="#">JSON Path Finder</a>
                     </div>
-                    <div id="navbar" class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-                    </div>
                 </div>
             </nav>
 
@@ -51,9 +45,9 @@
                             </div>
                             <div class="panel-body" ng-controller="PathResultsController">
                                 <span>Total paths found: {{paths.length}}</span>
-                                <ul style="margin-top: 10px;width: 90%;">
+                                <ul style="margin-top: 10px;width: 90%;" ng-show="paths.length">
                                     <li ng-repeat="path in paths">
-                                        <span style="word-break: break-all;">{{path}} <button type="button" class="btn btn-primary btn-xs glyphicon glyphicon-copy" ng-click="copyPath(path);" title="Copy Path"></button></span>
+                                        <span style="word-break: break-all;">{{path}}</span>
                                     </li>
                                 </ul>
                             </div>
