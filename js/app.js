@@ -47,11 +47,11 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
           if(isInt(property)) {
             addJsonPaths(theObject[property], path + '[' + property + ']');
           } else {
-            addJsonPaths(theObject[property], path + '.' + property);
+            addJsonPaths(theObject[property], path + $scope.pathSeperator + property);
           }
         } else {
-          var finalPath = path + '.' + property;
-          if(finalPath.indexOf("/" + $scope.nodeText) > -1) {
+          var finalPath = path + $scope.pathSeperator + property;
+          if(finalPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
             var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
               finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length);
               if($scope.paths.indexOf(finalPath) == -1) {
