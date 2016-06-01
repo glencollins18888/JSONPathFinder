@@ -31,14 +31,16 @@
                                 <label for="nodeInput">Search Node :</label>
                                 <input name="nodeInput" type="text" ng-model="nodeText" placeholder="e.g. childNode" style="width: 250px;">
                             </div>
-                            <div>
+                            <div style="margin-top:10px;">
                                 <label for="nodeInput">Path Seperator :</label>
                                 <label for="pathSeperatorRadio" style="margin-left: 10px">.</label>
                                 <input type="radio" ng-model="pathSeperator" value="." name="pathSeperatorRadio" ng-checked="true">
                                 <label for="pathSeperatorRadio" style="margin-left: 10px">/</label>
                                 <input type="radio" ng-model="pathSeperator" value="/" name="pathSeperatorRadio">
                             </div>
-                            <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="!enteredJson || !nodeText">Submit</button>
+                            <div style="margin-top:10px;">
+                                <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="!enteredJson || !nodeText">Submit</button>
+                            </div>
                         </div>
                     </form>
 
@@ -47,7 +49,7 @@
                             <h2 class="panel-title">JSON Paths for : {{nodeText}}</h2>
                         </div>
                         <div class="panel-body" ng-controller="PathResultsController">
-                            <span>Total paths found: <b>{{paths.length}}</b></span>
+                            <span>Total paths found : <b>{{paths.length}}</b></span>
                             <ul class="list-group" style="margin-top:10px;width: 90%;">
                                 <li ng-repeat="path in paths" class="list-group-item">
                                     <span style="word-break: break-all;">{{path}}</span>
