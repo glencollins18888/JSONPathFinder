@@ -30,15 +30,7 @@
                             <div>
                                 <label for="nodeInput">Search Node :</label>
                                 <input name="nodeInput" type="text" ng-model="nodeText" placeholder="e.g. childNode" style="width: 250px;">
-                            </div>
-                            <div style="margin-top:10px;">
-                                <label for="nodeInput">Path Seperator :</label>
-                                <label for="pathSeperatorRadio" style="margin-left: 10px">.</label>
-                                <input type="radio" ng-model="pathSeperator" value="." name="pathSeperatorRadio" ng-checked="true">
-                                <label for="pathSeperatorRadio" style="margin-left: 10px">/</label>
-                                <input type="radio" ng-model="pathSeperator" value="/" name="pathSeperatorRadio">
-                            </div>
-                            <div style="margin-top:10px;">
+
                                 <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="!enteredJson || !nodeText">Submit</button>
                             </div>
                         </div>
