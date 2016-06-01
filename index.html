@@ -27,8 +27,10 @@
                         </div>
                         <br>
                         <div>
-                            <label for="nodeInput">Search Node :</label>
-                            <input name="nodeInput" type="text" ng-model="nodeText" placeholder="e.g FirstName" style="width: 250px;">
+                            <div>
+                                <label for="nodeInput">Search Node :</label>
+                                <input name="nodeInput" type="text" ng-model="nodeText" placeholder="e.g. childNode" style="width: 250px;">
+                            </div>
                             <div>
                                 <label for="nodeInput">Path Seperator :</label>
                                 <label for="pathSeperatorRadio" style="margin-left: 10px">.</label>
@@ -40,7 +42,7 @@
                         </div>
                     </form>
 
-                    <section id="results" class="panel panel-primary" style="margin-top: 20px" ng-show="submitted">
+                    <section id="results" class="panel panel-primary" style="margin-top: 40px" ng-show="submitted">
                         <div class="panel-heading">
                             <h2 class="panel-title">JSON Paths for : {{nodeText}}</h2>
                         </div>

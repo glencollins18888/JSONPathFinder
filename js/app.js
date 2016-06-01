@@ -22,6 +22,8 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
   $scope.results = [];
   $scope.paths = [];
   $scope.validJSON = true;
+  $scope.pathSeperator = ".";
+
   $scope.submit = function() {
 
     $scope.paths = [];
@@ -45,6 +47,7 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
       if (theObject.hasOwnProperty(property)) {
         if (theObject[property] instanceof Object) {
           if(isInt(property)) {
+            // Its an array element here add [arrayIndex] to the path.
             addJsonPaths(theObject[property], path + '[' + property + ']');
           } else {
             addJsonPaths(theObject[property], path + $scope.pathSeperator + property);
@@ -53,7 +56,7 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
           var finalPath = path + $scope.pathSeperator + property;
           if(finalPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
             var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
-              finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length);
+              finalPath = finalPath.substring(1, nodeIndex + $scope.nodeText.length);
               if($scope.paths.indexOf(finalPath) == -1) {
                   $scope.paths.push(finalPath);
               }
