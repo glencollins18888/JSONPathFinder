@@ -10,11 +10,11 @@
     <script src="app/bower_components/angular/angular.min.js"></script>
     <script src="js/app.js"></script>
 </head>
-<body style="background-color: #fafbfc;">
+<body class="center-block" style="background-color: #fafbfc; width:80%;">
         <section class="container" style="width: 80%">
             <h2>JSONPath Finder</h2>
-            <p>Simple tool that allows you to list all JSONPaths for a particular node.</p>
-            <div class="starter-template" style="margin-top: 40px;">
+            <p>Simple tool that allows you to list all JSONPath expressions for a particular node.</p>
+            <div class="center-block" style="margin-top: 40px;">
 
                 <div ng-controller="PathFinderController">
                     <form>
@@ -38,17 +38,20 @@
 
                     <section id="results" class="panel panel-primary" style="margin-top: 40px" ng-show="submitted">
                         <div class="panel-heading">
-                            <h2 class="panel-title">JSON Paths for : {{nodeText}}</h2>
+                            <h2 class="panel-title">JSONPath expressions for : {{nodeText}}</h2>
                         </div>
                         <div class="panel-body" ng-controller="PathResultsController">
-                            <span>Total paths found : <b>{{paths.length}}</b></span>
+                            <span>Total JSONPath's found : <b>{{paths.length}}</b></span>
                             <ul class="list-group" style="margin-top:10px;width: 90%;">
                                 <li ng-repeat="path in paths" class="list-group-item">
                                     <span style="word-break: break-all;">{{path}}</span>
                                 </li>
                             </ul>
+
+                            <!--<span>Try these path expressions <a href="https://jsonpath.curiousconcept.com/" target="_blank">here</a>.</a></span>-->
                         </div>
                     </section>
+
                 </div>
             </div>
             <footer class="row navbar-default container" style="width: 80%">
