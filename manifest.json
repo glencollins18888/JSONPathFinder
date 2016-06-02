@@ -7,8 +7,8 @@
   "author": "Glen Collins",
 
    "icons": { "16": "img/logo_16x16.png",
-             "48": "img/logo_16x16.png",
-             "128": "img/logo_16x16.png"
+             "19": "img/logo_19x19.png",
+			 "48": "img/logo_48x48.png"
   },
 
   "background": {
@@ -17,7 +17,7 @@
   
   "browser_action": {
     "default_icon": {
-      "19": "img/logo_16x16.png",
+      "19": "img/logo_19x19.png",
       "38": "img/logo_16x16.png"
     }
   }
