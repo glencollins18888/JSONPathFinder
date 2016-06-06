@@ -1,21 +1,8 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-/*angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);*/
-
 var clientApp = angular.module('clientApp', []);
 
-
+//PathFinderController.inject
 clientApp.controller('PathFinderController', ['$scope', function($scope) {
 
   //Submit the Request to get the paths for the node text.
@@ -23,6 +10,7 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
   $scope.paths = [];
   $scope.validJSON = true;
   $scope.pathSeperator = ".";
+  $scope.jsonObject;
 
   $scope.submit = function() {
 
@@ -32,6 +20,7 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
     try {
       json = angular.fromJson($scope.enteredJson);
       $scope.validJSON = true;
+      $scope.jsonObject = json;
     } catch(err) {
       console.log("Invalid JSON");
       $scope.validJSON = false;
@@ -53,17 +42,31 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
             addJsonPaths(theObject[property], path + $scope.pathSeperator + property);
           }
         } else {
+          var pathInfo = {};
           var finalPath = path + $scope.pathSeperator + property;
           if(finalPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
-            var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
-              finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length);
-              if($scope.paths.indexOf(finalPath) == -1) {
-                  $scope.paths.push(finalPath);
+              var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
+              finalPath = "$" + finalPath.substring(0, nodeIndex + $scope.nodeText.length).trim();
+              if(!doesPathExist(finalPath)) {
+                  //var data = jsonPath($scope.jsonObject, finalPath);
+                  pathInfo["path"] = finalPath;
+                  pathInfo["result"] = JSON.stringify(theObject, undefined, 2);
+                  $scope.paths.push(pathInfo);
               }
           }
         }
       }
     }
+  }
+
+  function doesPathExist(finalPath) {
+    var doesExist = false;
+    angular.forEach($scope.paths, function(pathInfo, key) {
+      if(pathInfo.path === finalPath) {
+        doesExist = true;
+      }
+    });
+    return doesExist;
   }
 
   function isInt(value) {
