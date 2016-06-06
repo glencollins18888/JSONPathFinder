@@ -39,7 +39,7 @@
 
                     <section id="results" class="panel panel-primary" style="margin-top: 40px" ng-show="submitted">
                         <div class="panel-heading">
-                            <h2 class="panel-title">JSONPath expressions for : {{nodeText}}</h2>
+                            <h2 class="panel-title" style="word-break: break-all;">JSONPath expressions for : {{nodeText}}</h2>
                         </div>
                         <div class="panel-body" ng-controller="PathResultsController">
                             <span>Total JSONPath's found : <b>{{paths.length}}</b></span>
@@ -65,8 +65,8 @@
                 </div>
             </div>
             <footer class="row navbar-default container" style="width: 65%">
-                <p class="text-muted pull-left">Glen Collins 2016</p>
-                <p class="text-muted pull-right"><a href="https://github.com/glencollins18888/JSONPathFinder" target="_blank">Source</a></p>
+                <p class="text-muted pull-left" style="color:white;">Glen Collins 2016</p>
+                <p class="pull-right"><a style="color:white;" href="https://github.com/glencollins18888/JSONPathFinder" target="_blank">Source</a></p>
             </footer>
         </section>
 </body>

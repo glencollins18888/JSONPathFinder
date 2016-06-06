@@ -1,14 +1,15 @@
 {
   "manifest_version": 2,
-  "name": "JSON Path Finder",
-  "version": "1.0.0",
+  "name": "JSONPath Finder",
+  "version": "1.0.2",
 
-  "description": "A free tool to use to discover full paths to nodes within a JSON document",
+  "description": "Find all JSONPaths for a specified node within a JSON document",
   "author": "Glen Collins",
 
    "icons": { "16": "img/logo_16x16.png",
              "19": "img/logo_19x19.png",
-			 "48": "img/logo_48x48.png"
+			 "48": "img/logo_48x48.png",
+			 "128": "img/logo_128x128.png"
   },
 
   "background": {
@@ -18,7 +19,7 @@
   "browser_action": {
     "default_icon": {
       "19": "img/logo_19x19.png",
-      "38": "img/logo_16x16.png"
+      "38": "img/logo_48x48.png"
     }
   }
 }
