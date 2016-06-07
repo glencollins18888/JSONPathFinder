@@ -48,9 +48,9 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
               var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
               finalPath = "$" + finalPath.substring(0, nodeIndex + $scope.nodeText.length).trim();
               if(!doesPathExist(finalPath)) {
-                  //var data = jsonPath($scope.jsonObject, finalPath);
+                  var data = jsonPath($scope.jsonObject, finalPath);
                   pathInfo["path"] = finalPath;
-                  pathInfo["result"] = JSON.stringify(theObject, undefined, 2);
+                  pathInfo["result"] = JSON.stringify(data[0], undefined, 2);
                   $scope.paths.push(pathInfo);
               }
           }
