@@ -43,14 +43,14 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
           }
         } else {
           var pathInfo = {};
-          var finalPath = path + $scope.pathSeperator + property;
-          if(finalPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
-              var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
-              finalPath = "$" + finalPath.substring(0, nodeIndex + $scope.nodeText.length).trim();
-              if(!doesPathExist(finalPath)) {
-                  var data = jsonPath($scope.jsonObject, finalPath);
-                  pathInfo["path"] = finalPath;
-                  pathInfo["result"] = JSON.stringify(data[0], undefined, 2);
+          var finalJSONPath = path + $scope.pathSeperator + property;
+          if(finalJSONPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
+              var nodeIndex = finalJSONPath.lastIndexOf($scope.nodeText);
+              finalJSONPath = "$" + finalJSONPath.substring(0, nodeIndex + $scope.nodeText.length).trim();
+              if(!doesPathExist(finalJSONPath)) {
+                  var data = jsonPath($scope.jsonObject, finalJSONPath);
+                  pathInfo["path"] = finalJSONPath;
+                  pathInfo["result"] = JSON.stringify(data, undefined, 2);
                   $scope.paths.push(pathInfo);
               }
           }
