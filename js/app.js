@@ -36,22 +36,32 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
       if (theObject.hasOwnProperty(property)) {
         if (theObject[property] instanceof Object) {
           if(isInt(property)) {
-            // Its an array element here add [arrayIndex] to the path.
+            // Its an array element here add [arrayIndex] to the finalPath.
             addJsonPaths(theObject[property], path + '[' + property + ']');
           } else {
             addJsonPaths(theObject[property], path + $scope.pathSeperator + property);
           }
         } else {
-          var pathInfo = {};
-          var finalJSONPath = path + $scope.pathSeperator + property;
-          if(finalJSONPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
-              var nodeIndex = finalJSONPath.lastIndexOf($scope.nodeText);
-              finalJSONPath = "$" + finalJSONPath.substring(0, nodeIndex + $scope.nodeText.length).trim();
-              if(!doesPathExist(finalJSONPath)) {
-                  var data = jsonPath($scope.jsonObject, finalJSONPath);
-                  pathInfo["path"] = finalJSONPath;
-                  pathInfo["result"] = JSON.stringify(data, undefined, 2);
-                  $scope.paths.push(pathInfo);
+            var pathInfo = {};
+            var finalPath = path + $scope.pathSeperator + property;
+            if(finalPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
+              var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
+              finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length).trim();
+              if(!doesPathExist(finalPath)) {
+                  var data;
+                  finalPath = "$" + finalPath;
+                  if($scope.pathSeperator === "/") {
+                    data = jsonPath($scope.jsonObject, finalPath.replace(/\//g, "."));
+                    finalPath = finalPath.substring(1);
+                  } else {
+                    data = jsonPath($scope.jsonObject, finalPath);
+                  }
+
+                  if(data) {
+                    pathInfo["path"] = finalPath;
+                    pathInfo["result"] = JSON.stringify(data[0], undefined, 2);
+                    $scope.paths.push(pathInfo);
+                  }
               }
           }
         }
