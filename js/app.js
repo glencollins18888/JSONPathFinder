@@ -10,23 +10,22 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
   $scope.paths = [];
   $scope.validJSON = true;
   $scope.pathSeperator = ".";
-  $scope.jsonObject;
+  var jsonAsObject;
 
   $scope.submit = function() {
 
     $scope.paths = [];
     var enteredNode = $scope.nodeText;
-    var json;
     try {
-      json = angular.fromJson($scope.enteredJson);
+      var enteredJson = document.getElementById("enteredJson").value;
+      jsonAsObject = angular.fromJson(enteredJson);
       $scope.validJSON = true;
-      $scope.jsonObject = json;
     } catch(err) {
       console.log("Invalid JSON");
       $scope.validJSON = false;
     }
 
-    addJsonPaths(json, "");
+    addJsonPaths(jsonAsObject, "");
     $scope.submitted = true;
   };
 
@@ -51,10 +50,10 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
                   var data;
                   finalPath = "$" + finalPath;
                   if($scope.pathSeperator === "/") {
-                    data = jsonPath($scope.jsonObject, finalPath.replace(/\//g, "."));
+                    data = jsonPath(jsonAsObject, finalPath.replace(/\//g, "."));
                     finalPath = finalPath.substring(1);
                   } else {
-                    data = jsonPath($scope.jsonObject, finalPath);
+                    data = jsonPath(jsonAsObject, finalPath);
                   }
 
                   if(data) {
