@@ -52,7 +52,6 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
 
                   if($scope.pathSeperator === "/") {
                     data = jsonPath(jsonAsObject, jsonPathQuery.replace(/\//g, "."));
-                    finalPath = finalPath.substring(1);
                   } else {
                     data = jsonPath(jsonAsObject, jsonPathQuery);
                   }
