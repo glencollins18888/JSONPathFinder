@@ -48,12 +48,13 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
               finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length).trim();
               if(!doesPathExist(finalPath)) {
                   var data;
-                  finalPath = "$" + finalPath;
+                  var jsonPathQuery = "$" + finalPath;
+
                   if($scope.pathSeperator === "/") {
-                    data = jsonPath(jsonAsObject, finalPath.replace(/\//g, "."));
+                    data = jsonPath(jsonAsObject, jsonPathQuery.replace(/\//g, "."));
                     finalPath = finalPath.substring(1);
                   } else {
-                    data = jsonPath(jsonAsObject, finalPath);
+                    data = jsonPath(jsonAsObject, jsonPathQuery);
                   }
 
                   if(data) {
