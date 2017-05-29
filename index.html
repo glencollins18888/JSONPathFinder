@@ -4,53 +4,82 @@
 <head>
     <meta charset="utf-8">
     <title>JSON Path Finder</title>
-    <link href="app/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/app.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="app/bower_components/angular/angular.min.js"></script>
+    <script src="app/components/angular/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <script type="text/javascript" src="js/jsonpath.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-80295397-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
 </head>
-<body style="background-color: #fafbfc;">
+<body class="center-block" style="background-color: #fafbfc; width:80%;">
         <section class="container" style="width: 80%">
-            <h2>JSON Path Finder {?}</h2>
-            <p>Simple tool that allows you to get full paths to any node in a JSON document, formatted as <b>GrandParentNode/ParentNode/SearchNode</b></p>
-            <div class="starter-template" style="margin-top: 40px;">
+            <h2>JSONPath Finder</h2>
+            <p>Simple tool that allows you to list all JSONPath expressions for a particular node.</p>
+            <div class="center-block" style="margin-top: 40px;">
+
                 <div ng-controller="PathFinderController">
-                    <div>
-                        <textarea name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" placeholder=' Please enter a valid JSON document e.g.  {"Person" : {"FirstName": "John"}}' ng-model="enteredJson"></textarea>
+                    <form>
+                        <div>
+                            <textarea id="enteredJson" name=jsonTextArea" style="margin: 0px; width: 100%; height: 362px;" ng-model="enteredJson" placeholder="Enter valid JSON or a URL endpoint that returns JSON e.g. http://headers.jsontest.com/"></textarea>
 
-                        <div class="alert alert-danger" ng-hide="validJSON">
-                            Invalid JSON Syntax. You can validate your JSON <a href="http://jsonlint.com/" target="_blank">here</a>
+                            <div class="alert alert-danger" ng-hide="validJSON">
+                                Invalid JSON Syntax. You can validate your JSON <a href="http://jsonlint.com/" target="_blank">here</a>
+                            </div>
                         </div>
-                    </div>
-                    <br>
-                    <div>
-                        <label for="nodeInput">Search Node :</label>
-                        <input name="nodeInput" type="text" ng-model="nodeText" placeholder="e.g FirstName" style="width: 250px;">
-                        <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="!enteredJson || !nodeText">Submit</button>
-                    </div>
+                        <br>
+                        <div>
+                            <div>
+                                <label for="nodeInput">Search Node :</label>
+                                <input name="nodeInput" type="text" ng-model="nodeText" style="width: 250px;">
+                                <div style="margin-top:10px;">
+                                    <label for="nodeInput">Path Type :</label>
+                                    <label for="pathSeperatorRadio" style="margin-left: 10px">JSONPath</label>
+                                    <input type="radio" ng-model="pathSeperator" value="." name="pathSeperatorRadio" ng-checked="true">
+                                    <label for="pathSeperatorRadio" style="margin-left: 10px">XMLPath</label>
+                                    <input type="radio" ng-model="pathSeperator" value="/" name="pathSeperatorRadio">
+                                </div>
 
-                    <section id="results" class="panel panel-primary" style="margin-top: 20px" ng-show="submitted">
+
+                            <button type="submit" class="btn btn-success" id="submitFormButton" ng-click="submit();" ng-disabled="!enteredJson || !nodeText">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <section id="results" class="panel panel-primary" style="margin-top: 40px" ng-show="submitted">
                         <div class="panel-heading">
-                            <h2 class="panel-title">JSON Paths for : {{nodeText}}</h2>
+                            <h2 class="panel-title" style="word-break: break-all;">JSONPath expressions for : {{nodeText}}</h2>
                         </div>
                         <div class="panel-body" ng-controller="PathResultsController">
-                            <span>Total paths found: <b>{{paths.length}}</b></span>
-                            <ul class="list-group" style="margin-top:10px;width: 90%;">
-                                <li ng-repeat="path in paths" class="list-group-item">
-                                    <span style="word-break: break-all;">{{path}}</span>
-                                </li>
-                            </ul>
+                            <span>Total JSONPath's found : <b>{{paths.length}}</b></span>
+
+                            <table style="margin-top:10px;width: 90%;" class="table">
+                                <th>Path</th>
+                                <th>Result</th>
+                                <tr ng-repeat="pathInfo in paths">
+
+                                    <td style="word-break: break-all;width:50%;">{{ pathInfo.path }}</td>
+                                    <td><pre style="white-space: pre-wrap;">{{ pathInfo.result}}</pre></td>
+                                </tr>
+                            </table>
                         </div>
                     </section>
+
                 </div>
             </div>
-            <footer class="row navbar-default container" style="width: 80%">
-                <p class="text-muted pull-left">Glen Collins 2016</p>
-                <p class="text-muted pull-right"><a href="https://github.com/glencollins18888/JSONPathFinder" target="_blank">Source</a></p>
+            <footer class="row navbar-default container" style="width: 65%">
+                <p class="text-muted pull-left" style="color:white;">Glen Collins 2016</p>
+                <p class="pull-right"><a style="color:white;" href="https://github.com/glencollins18888/JSONPathFinder" target="_blank">Source</a></p>
             </footer>
         </section>
-
-        <script src="js/app.js"></script>
-
-    </body>
+</body>
 </html>

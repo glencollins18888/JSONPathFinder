@@ -1,66 +1,114 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-/*angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);*/
-
 var clientApp = angular.module('clientApp', []);
 
-
-clientApp.controller('PathFinderController', ['$scope', function($scope) {
+//PathFinderController.inject
+clientApp.controller('PathFinderController', ['$scope', '$http', function($scope, $http) {
 
   //Submit the Request to get the paths for the node text.
   $scope.results = [];
   $scope.paths = [];
   $scope.validJSON = true;
+  $scope.pathSeperator = ".";
+  var jsonAsObject;
+
   $scope.submit = function() {
 
     $scope.paths = [];
     var enteredNode = $scope.nodeText;
-    var json;
     try {
-      json = angular.fromJson($scope.enteredJson);
-      $scope.validJSON = true;
+        var enteredText = document.getElementById("enteredJson").value;
+        if(enteredText.indexOf("http") == 0 || enteredText.indexOf("https") == 0) {
+            // User has entered a URL. Go fetch the data
+            $http.get(enteredText)
+                .success(function(data) {
+                    getJsonPaths(data);
+                })
+                .error(function(data) {
+                    $scope.validJSON = false;
+                });
+        } else {
+            getJsonPaths(enteredText);
+        }
     } catch(err) {
       console.log("Invalid JSON");
       $scope.validJSON = false;
     }
 
-    addJsonPaths(json, "");
-    $scope.submitted = true;
   };
 
-  function addJsonPaths(theObject, path) {
-    var paths = [];
-    for (var property in theObject) {
-      if (theObject.hasOwnProperty(property)) {
-        if (theObject[property] instanceof Object) {
-          if(isInt(property)) {
-            addJsonPaths(theObject[property], path + '[' + property + ']');
-          } else {
-            addJsonPaths(theObject[property], path + '/' + property);
-          }
+    function getJsonPaths(data) {
+        jsonAsObject = angular.fromJson(data);
+        $scope.validJSON = true;
+        traverse(jsonAsObject, "");
+        $scope.submitted = true;
+    }
+
+    function traverse(x, path) {
+        if (isArray(x)) {
+            traverseArray(x, path);
+        } else if ((typeof x === 'object') && (x !== null)) {
+            traverseObject(x, path);
         } else {
-          var finalPath = path + '/' + property;
-          if(finalPath.indexOf("/" + $scope.nodeText) > -1) {
-            var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
-              finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length);
-              if($scope.paths.indexOf(finalPath) == -1) {
-                  $scope.paths.push(finalPath);
-              }
-          }
+            var pathInfo = {};
+            var finalPath = path;
+            console.log(finalPath);
+            if (finalPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
+                 var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
+                 var matchedPathEndIndex = finalPath.indexOf($scope.pathSeperator, nodeIndex);
+                 if (matchedPathEndIndex > 0) {
+                    finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length).trim();
+                 }
+                 if (!doesPathExist(finalPath)) {
+                     var data;
+                     var jsonPathQuery = "$" + finalPath;
+
+                     if ($scope.pathSeperator === "/") {
+                         data = jsonPath(jsonAsObject, jsonPathQuery.replace(/\//g, "."));
+                     } else {
+                        data = jsonPath(jsonAsObject, jsonPathQuery);
+                     }
+
+                     if (data) {
+                         pathInfo["path"] = finalPath;
+                         pathInfo["result"] = JSON.stringify(data[0], undefined, 2);
+                         $scope.paths.push(pathInfo);
+                     }
+                 }
+             }
         }
+    }
+
+
+  function isArray(o) {
+    return Object.prototype.toString.call(o) === '[object Array]';
+  }
+
+  function traverseArray(arr, path) {
+    var count = 0;
+    arr.forEach(function(x) {
+      traverse(x, path + '[' + [count++] + ']');
+    });
+  }
+
+  function traverseObject(obj, path) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        //console.log(path + "  " + key + ":");
+        traverse(obj[key], path + $scope.pathSeperator + key);
       }
     }
+  }
+
+
+  function doesPathExist(finalPath) {
+    var doesExist = false;
+    angular.forEach($scope.paths, function(pathInfo, key) {
+      if(pathInfo.path === finalPath) {
+        doesExist = true;
+      }
+    });
+    return doesExist;
   }
 
   function isInt(value) {
