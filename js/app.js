@@ -25,49 +25,66 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
       $scope.validJSON = false;
     }
 
-    addJsonPaths(jsonAsObject, "");
+    traverse(jsonAsObject, "");
     $scope.submitted = true;
   };
 
-  function addJsonPaths(theObject, path) {
-    var paths = [];
-    for (var property in theObject) {
-      if (theObject.hasOwnProperty(property)) {
-        if (theObject[property] instanceof Object) {
-          if(isInt(property)) {
-            // Its an array element here add [arrayIndex] to the finalPath.
-            addJsonPaths(theObject[property], path + '[' + property + ']');
-          } else {
-            addJsonPaths(theObject[property], path + $scope.pathSeperator + property);
-          }
+    function traverse(x, path) {
+        if (isArray(x)) {
+            traverseArray(x, path);
+        } else if ((typeof x === 'object') && (x !== null)) {
+            traverseObject(x, path);
         } else {
             var pathInfo = {};
-            var finalPath = path + $scope.pathSeperator + property;
-            if(finalPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
-              var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
-              var matchedPathEndIndex = finalPath.indexOf($scope.pathSeperator, nodeIndex);
-              finalPath = finalPath.substring(0, matchedPathEndIndex).trim();
-              if(!doesPathExist(finalPath)) {
-                  var data;
-                  var jsonPathQuery = "$" + finalPath;
+            var finalPath = path;
+            console.log(finalPath);
+            if (finalPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
+                 var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
+                 var matchedPathEndIndex = finalPath.indexOf($scope.pathSeperator, nodeIndex);
+                 if (matchedPathEndIndex > 0) {
+                    finalPath = finalPath.substring(0, nodeIndex + $scope.nodeText.length).trim();
+                 }
+                 if (!doesPathExist(finalPath)) {
+                     var data;
+                     var jsonPathQuery = "$" + finalPath;
 
-                  if($scope.pathSeperator === "/") {
-                    data = jsonPath(jsonAsObject, jsonPathQuery.replace(/\//g, "."));
-                  } else {
-                    data = jsonPath(jsonAsObject, jsonPathQuery);
-                  }
+                     if ($scope.pathSeperator === "/") {
+                         data = jsonPath(jsonAsObject, jsonPathQuery.replace(/\//g, "."));
+                     } else {
+                        data = jsonPath(jsonAsObject, jsonPathQuery);
+                     }
 
-                  if(data) {
-                    pathInfo["path"] = finalPath;
-                    pathInfo["result"] = JSON.stringify(data[0], undefined, 2);
-                    $scope.paths.push(pathInfo);
-                  }
-              }
-          }
+                     if (data) {
+                         pathInfo["path"] = finalPath;
+                         pathInfo["result"] = JSON.stringify(data[0], undefined, 2);
+                         $scope.paths.push(pathInfo);
+                     }
+                 }
+             }
         }
+    }
+
+
+  function isArray(o) {
+    return Object.prototype.toString.call(o) === '[object Array]';
+  }
+
+  function traverseArray(arr, path) {
+    var count = 0;
+    arr.forEach(function(x) {
+      traverse(x, path + '[' + [count++] + ']');
+    });
+  }
+
+  function traverseObject(obj, path) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        //console.log(path + "  " + key + ":");
+        traverse(obj[key], path + $scope.pathSeperator + key);
       }
     }
   }
+
 
   function doesPathExist(finalPath) {
     var doesExist = false;
