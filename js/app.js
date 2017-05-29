@@ -3,7 +3,7 @@
 var clientApp = angular.module('clientApp', []);
 
 //PathFinderController.inject
-clientApp.controller('PathFinderController', ['$scope', function($scope) {
+clientApp.controller('PathFinderController', ['$scope', '$http', function($scope, $http) {
 
   //Submit the Request to get the paths for the node text.
   $scope.results = [];
@@ -17,17 +17,32 @@ clientApp.controller('PathFinderController', ['$scope', function($scope) {
     $scope.paths = [];
     var enteredNode = $scope.nodeText;
     try {
-      var enteredJson = document.getElementById("enteredJson").value;
-      jsonAsObject = angular.fromJson(enteredJson);
-      $scope.validJSON = true;
+        var enteredText = document.getElementById("enteredJson").value;
+        if(enteredText.indexOf("http") == 0 || enteredText.indexOf("https") == 0) {
+            // User has entered a URL. Go fetch the data
+            $http.get(enteredText)
+                .success(function(data) {
+                    getJsonPaths(data);
+                })
+                .error(function(data) {
+                    $scope.validJSON = false;
+                });
+        } else {
+            getJsonPaths(enteredText);
+        }
     } catch(err) {
       console.log("Invalid JSON");
       $scope.validJSON = false;
     }
 
-    traverse(jsonAsObject, "");
-    $scope.submitted = true;
   };
+
+    function getJsonPaths(data) {
+        jsonAsObject = angular.fromJson(data);
+        $scope.validJSON = true;
+        traverse(jsonAsObject, "");
+        $scope.submitted = true;
+    }
 
     function traverse(x, path) {
         if (isArray(x)) {
