@@ -22,6 +22,7 @@ clientApp.controller('PathFinderController', ['$scope', '$http', function($scope
             // User has entered a URL. Go fetch the data
             $http.get(enteredText)
                 .success(function(data) {
+                    formatJsonAndDisplay(data)
                     getJsonPaths(data);
                 })
                 .error(function(data) {
@@ -36,6 +37,17 @@ clientApp.controller('PathFinderController', ['$scope', '$http', function($scope
     }
 
   };
+
+
+    $scope.prettyPrint = function() {
+        var enteredText = document.getElementById("enteredJson").value;
+        formatJsonAndDisplay(enteredText);
+    };
+
+    function formatJsonAndDisplay(data) {
+        var prettyPrint = JSON.stringify(data, undefined, 4);
+        document.getElementById('enteredJson').value = prettyPrint;
+    }
 
     function getJsonPaths(data) {
         jsonAsObject = angular.fromJson(data);
@@ -52,7 +64,6 @@ clientApp.controller('PathFinderController', ['$scope', '$http', function($scope
         } else {
             var pathInfo = {};
             var finalPath = path;
-            console.log(finalPath);
             if (finalPath.indexOf($scope.pathSeperator + $scope.nodeText) > -1) {
                  var nodeIndex = finalPath.lastIndexOf($scope.nodeText);
                  var matchedPathEndIndex = finalPath.indexOf($scope.pathSeperator, nodeIndex);
@@ -66,7 +77,7 @@ clientApp.controller('PathFinderController', ['$scope', '$http', function($scope
                      if ($scope.pathSeperator === "/") {
                          data = jsonPath(jsonAsObject, jsonPathQuery.replace(/\//g, "."));
                      } else {
-                        data = jsonPath(jsonAsObject, jsonPathQuery);
+                         data = jsonPath(jsonAsObject, jsonPathQuery);
                      }
 
                      if (data) {
@@ -94,7 +105,6 @@ clientApp.controller('PathFinderController', ['$scope', '$http', function($scope
   function traverseObject(obj, path) {
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
-        //console.log(path + "  " + key + ":");
         traverse(obj[key], path + $scope.pathSeperator + key);
       }
     }
